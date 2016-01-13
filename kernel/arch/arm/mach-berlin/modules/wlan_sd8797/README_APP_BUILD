@@ -1,0 +1,33 @@
+===============================================================================
+			U S E R  M A N U A L
+
+1) BUILD APPLICATIONS FOR NON-ANDROID
+
+	The apps are auto rebuilt along with driver using the original Makefile.
+	The Android.mk files under app directories are not needed and can be removed.
+
+	The following option in Makefile can be modified to use static library link.
+		export CONFIG_STATIC_LINK=n
+
+2) BUILD APPLICATIONS FOR ANDROID
+
+	1. Need to have Android project setup
+
+	2. Copy application code including Android.mk to directory inside Android project
+		e.g.
+		cp -rf wlan_src/mapp $PROJ/vendor/marvell/mdriver_release
+
+	3. For new terminal, need to first run
+		cd <android_project_dir>
+		. build/envsetup.sh
+		chooseproduct dkbtd    ## for PXA920 OR evbpv2 for PXA950 etc.
+		export ANDROID_PREBUILT_MODULES=kernel/out/modules
+
+	4. Rebuild the app
+		e.g.
+		make clean-mlan2040coex clean-mlanconfig clean-mlanutl clean-mlanevent.exe clean-uaputl.exe
+		make mlan2040coex mlanconfig mlanutl mlanevent.exe uaputl.exe
+
+	5. Rebuilt apps will be at out/target/product/<chooseproduct_value>/system/bin
+
+	6. The apps rebuilt along with driver through Makefile may not work for Android
